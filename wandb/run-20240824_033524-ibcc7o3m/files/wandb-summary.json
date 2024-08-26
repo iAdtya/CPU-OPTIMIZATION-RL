@@ -1,0 +1,1 @@
+{"actor_loss": 0.34748178720474243, "critic_loss": 116314584645632.0, "episode_rewards": 928801357824.0, "episode_lengths": 10000.0, "entropy": 10.723654747009277, "learning_rate": 0.005, "_timestamp": 1724454578.052847, "_runtime": 3853.993132829666, "_step": 24, "_wandb": {"runtime": 3852}}

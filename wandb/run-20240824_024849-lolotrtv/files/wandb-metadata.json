@@ -1,0 +1,47 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.10.0",
+    "heartbeatAt": "2024-08-23T21:18:51.772187",
+    "startedAt": "2024-08-23T21:18:49.059793",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "D:\\CPU-OPTIMIZATION-RL\\Custom_ENV\\train_ppo_priority_scheduler.py",
+    "codePathLocal": "Custom_ENV\\train_ppo_priority_scheduler.py",
+    "codePath": "Custom_ENV\\train_ppo_priority_scheduler.py",
+    "host": "Chairo",
+    "username": "ASUS",
+    "executable": "D:\\TOOL\\New folder\\envs\\cpu\\python.exe",
+    "cpu_count": 8,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 2000.0,
+        "min": 0.0,
+        "max": 2000.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2000.0,
+            "min": 0.0,
+            "max": 2000.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 274.99901962280273,
+            "used": 206.42285537719727
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 15.699298858642578
+    }
+}

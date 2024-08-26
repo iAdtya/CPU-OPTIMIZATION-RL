@@ -1,0 +1,8 @@
+Training PPO model with 10000 per dataset
+Starting time: 2024-08-24 02:48:54.690857
+Traceback (most recent call last):
+  File "D:\CPU-OPTIMIZATION-RL\Custom_ENV\train_ppo_priority_scheduler.py", line 33, in <module>
+    model.learn(n_steps)
+  File "D:\CPU-OPTIMIZATION-RL\Custom_ENV\ppo.py", line 79, in learn
+    A_k = batch_rtgs - V.detach()
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!

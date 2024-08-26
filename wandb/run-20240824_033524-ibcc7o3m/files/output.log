@@ -1,0 +1,12 @@
+Training PPO model with 10000 per dataset
+Starting time: 2024-08-24 03:35:30.556971
+Training on first dataset complete after 906.249844789505 seconds
+Training on second dataset complete after 709.5606627464294 seconds
+Training on third dataset complete after 734.3826370239258 seconds
+Training on fourth dataset complete after 633.3420004844666 seconds
+Training on fifth dataset complete after 863.9557077884674 seconds
+FeedForwardNN(
+  (layer1): Linear(in_features=155, out_features=64, bias=True)
+  (layer2): Linear(in_features=64, out_features=64, bias=True)
+  (layer3): Linear(in_features=64, out_features=10, bias=True)
+)

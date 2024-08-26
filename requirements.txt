@@ -1,0 +1,4 @@
+gymnasium[all]
+numpy 
+pandas 
+stable-baselines3[extra]

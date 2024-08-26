@@ -1,0 +1,14 @@
+Training PPO model with 10000 per dataset
+Starting time: 2024-08-24 02:26:46.969566
+Traceback (most recent call last):
+  File "D:\CPU-OPTIMIZATION-RL\Custom_ENV\train_ppo_priority_scheduler.py", line 33, in <module>
+    model.learn(n_steps)
+  File "D:\CPU-OPTIMIZATION-RL\Custom_ENV\ppo.py", line 76, in learn
+    V, _ = self.evaluate(batch_obs, batch_acts)
+  File "D:\CPU-OPTIMIZATION-RL\Custom_ENV\ppo.py", line 256, in evaluate
+    log_probs = dist.log_prob(batch_acts)
+  File "D:\TOOL\New folder\envs\cpu\lib\site-packages\torch\distributions\multivariate_normal.py", line 249, in log_prob
+    M = _batch_mahalanobis(self._unbroadcasted_scale_tril, diff)
+  File "D:\TOOL\New folder\envs\cpu\lib\site-packages\torch\distributions\multivariate_normal.py", line 63, in _batch_mahalanobis
+    torch.linalg.solve_triangular(flat_L, flat_x_swap, upper=False).pow(2).sum(-2)
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument B in method wrapper_CUDA__linalg_solve_triangular)
