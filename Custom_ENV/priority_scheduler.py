@@ -6,14 +6,12 @@ import numpy as np
 
 
 register(
-    id="PrioritySchedulerEnv",  
-    entry_point="priority_scheduler:PrioritySchedulerEnv",  
+    id="PrioritySchedulerEnv",
+    entry_point="priority_scheduler:PrioritySchedulerEnv",
 )
 
 
 class PrioritySchedulerEnv(gym.Env):
-    metadata = {"render_modes": ["human"], "render_fps": 4}
-
     def __init__(self, data, encoder_context, max_priority) -> None:
         super(PrioritySchedulerEnv, self).__init__()
 

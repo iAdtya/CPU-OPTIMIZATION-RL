@@ -3,8 +3,6 @@ import torch
 import time, datetime
 import gymnasium as gym
 from ppo import PPO
-from torch.utils.tensorboard.writer import SummaryWriter
-import priority_scheduler
 
 dataset1 = np.genfromtxt("Custom_ENV/dataset/dataset1.csv", delimiter=",", skip_header=1)
 dataset2 = np.genfromtxt("Custom_ENV/dataset/dataset2.csv", delimiter=",", skip_header=1)
@@ -12,7 +10,6 @@ dataset3 = np.genfromtxt("Custom_ENV/dataset/dataset3.csv", delimiter=",", skip_
 dataset4 = np.genfromtxt("Custom_ENV/dataset/dataset4.csv", delimiter=",", skip_header=1)
 dataset5 = np.genfromtxt("Custom_ENV/dataset/dataset5.csv", delimiter=",", skip_header=1)
 
-tb_writer = SummaryWriter(log_dir="./tensorboard_logs/")
 
 
 env = gym.make(
@@ -21,7 +18,7 @@ env = gym.make(
     encoder_context=30,
     max_priority=10,
 )
-model = PPO(env, 64, tb_writer)
+model = PPO(env, 64)
 
 
 n_steps = 10000
@@ -59,4 +56,3 @@ torch.save(
     model.actor.state_dict(), "model_weights/ml_priority_scheduler_5mil_30context.pt"
 )
 
-tb_writer.close()

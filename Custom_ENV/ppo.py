@@ -5,28 +5,25 @@ from torch.distributions import MultivariateNormal
 from torch.optim.adam import Adam
 from torch.nn import MSELoss
 import wandb
-from torch.utils.tensorboard.writer import SummaryWriter
+
 from neural_network import FeedForwardNN
 
 
 class PPO:
-    def __init__(
-        self, env: gym.Env, obs_enc_dim: int, tb_writer: SummaryWriter
-    ) -> None:
+    def __init__(self, env: gym.Env, obs_enc_dim: int) -> None:
         # Environment information
         self.env = env
         self.obs_dim = env.observation_space.shape[0] * env.observation_space.shape[1]
         self.obs_enc_dim = obs_enc_dim
         self.act_dim = env.action_space.n
         # self.act_dim = env.action_space.shape[0]
-        self.tb_writer = tb_writer
 
         # Hyperparameters
         self._init_hyperparameters()
 
         # Initialize a new wandb run
         wandb.init(
-            project="Cpu-Scheduling-DeepRL",
+            project="my-ppo-project",
             config={
                 "timesteps_per_batch": self.timesteps_per_batch,
                 "max_timesteps_per_episode": self.max_timesteps_per_episode,
@@ -39,10 +36,12 @@ class PPO:
 
         # ALG STEP 1
         # Actor and critic networks
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.actor = FeedForwardNN(self.obs_dim, self.act_dim).to(self.device)
-        self.critic = FeedForwardNN(self.obs_dim, 1).to(self.device)
-
+        """
+        self.actor = FeedForwardNN(self.obs_enc_dim, self.act_dim)
+        self.critic = FeedForwardNN(self.obs_enc_dim, self.act_dim)
+        """
+        self.actor = FeedForwardNN(self.obs_dim, self.act_dim)
+        self.critic = FeedForwardNN(self.obs_dim, 1)
         # Observations encoder
         # self.obs_enc = FeedForwardNN(self.obs_dim, self.obs_enc_dim)
 
@@ -52,8 +51,8 @@ class PPO:
         # self.obs_enc_optim = Adam(self.obs_enc.parameters(), lr = self.lr)
 
         # Multivariate Normal Stats
-        self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.5).to(self.device)
-        self.cov_mat = torch.diag(self.cov_var).to(self.device)
+        self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.5)
+        self.cov_mat = torch.diag(self.cov_var)
 
     def _init_hyperparameters(self):
         # Default hyperparameter values - NEED TO CHANGE
@@ -134,14 +133,6 @@ class PPO:
                     }
                 )
 
-                # todo Log metrics to TensorBoard
-                self.tb_writer.add_scalar("Loss/Actor", actor_loss.item(), n)
-                self.tb_writer.add_scalar("Loss/Critic", critic_loss.item(), n)
-                self.tb_writer.add_scalar("Rewards/Episode", episode_rewards, n)
-                self.tb_writer.add_scalar("Episode/Length", episode_lengths, n)
-                self.tb_writer.add_scalar("Entropy", entropy, n)
-                self.tb_writer.add_scalar("Learning Rate", learning_rate, n)
-
                 # Calculate how many timesteps collected in batch
                 n += np.sum(batch_lens)
 
@@ -197,13 +188,9 @@ class PPO:
             batch_rews.append(ep_rews)
 
         # reshape as tensors
-        batch_obs = torch.tensor(np.array(batch_obs), dtype=torch.float).to(self.device)
-        batch_acts = torch.tensor(np.array(batch_acts), dtype=torch.float).to(
-            self.device
-        )
-        batch_log_probs = torch.tensor(np.array(batch_log_probs), dtype=torch.float).to(
-            self.device
-        )
+        batch_obs = torch.tensor(np.array(batch_obs), dtype=torch.float)
+        batch_acts = torch.tensor(np.array(batch_acts), dtype=torch.float)
+        batch_log_probs = torch.tensor(np.array(batch_log_probs), dtype=torch.float)
 
         # ALG STEP 4 - Compute rewards-to-go
         batch_rtgs = self.compute_rtgs(batch_rews)
@@ -214,19 +201,17 @@ class PPO:
     def get_action(self, obs):
         # encode the observations and query the actor for mean action
         # obs = self.obs_enc(obs)
-        obs = torch.tensor(obs, dtype=torch.float).to(self.device)
-
         mean = self.actor(obs)
 
         # create multivariate normal distribution
-        dist = MultivariateNormal(mean, self.cov_mat.to(self.device))
+        dist = MultivariateNormal(mean, self.cov_mat)
 
         # sample action from distribution
         action = dist.sample()
         log_prob = dist.log_prob(action)
 
         # return detached action and log prob
-        return action.cpu().detach().numpy(), log_prob.cpu().detach().numpy()
+        return action.detach().numpy(), log_prob.detach().numpy()
 
     def compute_rtgs(self, batch_rews):
         # reawards-to-go per episode to return
@@ -240,7 +225,7 @@ class PPO:
                 batch_rtgs.insert(0, discounted_reward)
 
         # convert to tensor
-        batch_rtgs = torch.tensor(batch_rtgs, dtype=torch.float).to(self.device)
+        batch_rtgs = torch.tensor(batch_rtgs, dtype=torch.float)
         # print('rtgs', batch_rtgs.shape)
         return batch_rtgs
 
@@ -252,6 +237,6 @@ class PPO:
 
         # get log probabilities
         mean = self.actor(batch_obs)
-        dist = MultivariateNormal(mean, self.cov_mat.to(self.device))
+        dist = MultivariateNormal(mean, self.cov_mat)
         log_probs = dist.log_prob(batch_acts)
         return V, log_probs
