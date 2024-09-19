@@ -4,11 +4,11 @@ import time, datetime
 import gymnasium as gym
 from ppo import PPO
 
-dataset1 = np.genfromtxt("Custom_ENV/dataset/dataset1.csv", delimiter=",", skip_header=1)
-dataset2 = np.genfromtxt("Custom_ENV/dataset/dataset2.csv", delimiter=",", skip_header=1)
-dataset3 = np.genfromtxt("Custom_ENV/dataset/dataset3.csv", delimiter=",", skip_header=1)
-dataset4 = np.genfromtxt("Custom_ENV/dataset/dataset4.csv", delimiter=",", skip_header=1)
-dataset5 = np.genfromtxt("Custom_ENV/dataset/dataset5.csv", delimiter=",", skip_header=1)
+dataset1 = np.genfromtxt("../dataset/dataset1.csv", delimiter=",", skip_header=1)
+dataset2 = np.genfromtxt("../dataset/dataset2.csv", delimiter=",", skip_header=1)
+dataset3 = np.genfromtxt("../dataset/dataset3.csv", delimiter=",", skip_header=1)
+dataset4 = np.genfromtxt("../dataset/dataset4.csv", delimiter=",", skip_header=1)
+dataset5 = np.genfromtxt("../dataset/dataset5.csv", delimiter=",", skip_header=1)
 
 
 
