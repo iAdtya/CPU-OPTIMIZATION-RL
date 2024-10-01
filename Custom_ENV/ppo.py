@@ -70,8 +70,7 @@ class PPO:
             batch_obs, batch_acts, batch_log_probs, batch_rtgs, batch_lens = (
                 self.rollout()
             )
-
-            # Calculate V_{phi, k}
+            # todo Generalized Advantage Estimation GAE is a method to estimate the advantage function, which represents how much better an action is compared to the average action in a given state
             V, _ = self.evaluate(batch_obs, batch_acts)
 
             # ALG STEP 5 - Calculate Advantage
@@ -89,12 +88,13 @@ class PPO:
                 # Calculate ratio from PPO algorithm
                 ratios = torch.exp(curr_log_probs - batch_log_probs)
 
-                # calculate surrogate losses from PPO algorithm
+                #todo calculate surrogate losses from PPO algorithm to approximate the effect of the policy update
                 surr1 = ratios * A_k
                 surr2 = torch.clamp(ratios, 1 - self.clip, 1 + self.clip) * A_k
 
                 # Calculate losses.  Use Actor loss to pass through to encoder
                 actor_loss = (-torch.min(surr1, surr2)).mean()
+                #todo MSE is used to update the critic (value function) network
                 critic_loss = MSELoss()(V, batch_rtgs)
                 # encoder_loss = (-torch.min(surr1, surr2)).mean()
 
