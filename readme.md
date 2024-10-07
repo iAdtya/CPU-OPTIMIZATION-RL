@@ -1,16 +1,15 @@
 # CPU-SCHEDULING
 
-Training Deep-RL-Model to optimize the turnaround time for CPU scheduling algorithm outperforming Round-Robin.
-The model employs proximal policy optimization and understands complex relationships in the dataset and learns to prioritize tasks to optimize for turnaround time.
-
-<div style="text-align: center; border: 2px solid #000; padding: 10px; margin: 20px 0;">
-    <img src="./figures/euu/turnaround.png" alt="STATS" style="max-width: 100%; height: auto;">
-    <p><strong>Figure 1:</strong> Turnaround Time Statistics</p>
-</div>
+Training Deep-RL-Model to optimize the turnaround time for cpu scheduling algorithm outperforming Round-Robin.
+The model employs proximal policy optimization and understands complex relationships in the dataset and learns to prioritise task to optimise for turnaround time
+![STATS](./figures/euu/turnaround.png)
 
 ## SYSTEM DESIGN
 
-<div style="text-align: center; border: 2px solid #000; padding: 10px; margin: 20px 0;">
-    <img src="deep-rl.png" alt="Deep-RL-Model" style="max-width: 100%; height: auto;">
-    <p><strong>Figure 2:</strong> Deep RL Model Design</p>
-</div>
+![Deep-RL-Model](deep-rl.png)
+
+Hii, I am a machine learning engineer. I have worked on innovative projects such as a production-ready RAG application that bridges private data with LLMs and on-device speaker diarization for mobile. I am a consultant helping companies operationalize Large Language Models (LLMs) to accelerate their AI product journey.
+
+## Gradient Descent
+
+![Gradient Descent](Gradient_Descent.png)
